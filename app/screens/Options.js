@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, ScrollView, StatusBar } from 'react-native';
+import { Linking, Platform, ScrollView, StatusBar } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 
@@ -20,7 +20,7 @@ class Options extends Component {
     };
 
     handleSitePress = () => {
-      console.log('press site');
+      Linking.openURL('https://github.com/vladkanash').catch(() => alert('An error occurred'));
     };
 
     render() {
@@ -35,7 +35,7 @@ class Options extends Component {
           />
           <Separator />
           <ListItem
-            text="Fixer.io"
+            text="GitHub"
             onPress={this.handleSitePress}
             customIcon={
               <Ionicons name={`${ICON_PREFIX}-link`} color={ICON_COLOR} size={ICON_SIZE} />}
