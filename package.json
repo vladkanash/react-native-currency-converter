@@ -34,6 +34,7 @@
     "react-native": "0.52.0",
     "react-native-extended-stylesheet": "latest",
     "moment": "latest",
-    "@expo/vector-icons": "latest"
+    "@expo/vector-icons": "latest",
+    "react-navigation": "latest"
   }
 }
