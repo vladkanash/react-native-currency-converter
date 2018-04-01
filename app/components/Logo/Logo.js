@@ -13,8 +13,8 @@ class Logo extends Component {
   }
 
   componentDidMount() {
-    var showListener = 'keyboardWillShow';
-    var hideListener = 'keyboardWillHide';
+    let showListener = 'keyboardWillShow';
+    let hideListener = 'keyboardWillHide';
 
     if (Platform.OS === 'android') {
       showListener = 'keyboardDidShow';
