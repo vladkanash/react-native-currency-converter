@@ -5,9 +5,7 @@ const imageSize = Dimensions.get('window').width / 2;
 
 export default EStyleSheet.create({
   $largeContainerSize: imageSize,
-  $largeImageSize: imageSize / 2,
   $smallContainerSize: imageSize / 2,
-  $smallImageSize: imageSize / 4,
   container: {
     alignItems: 'center',
   },
@@ -16,9 +14,6 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     width: '$largeContainerSize',
     height: '$largeContainerSize',
-  },
-  logo: {
-    width: '$largeImageSize',
   },
   text: {
     fontWeight: '600',

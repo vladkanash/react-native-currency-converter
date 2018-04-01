@@ -10,12 +10,11 @@ class Logo extends Component {
     super(props);
 
     this.containerImageSize = new Animated.Value(styles.$largeContainerSize);
-    this.imageSize = new Animated.Value(styles.$largeImageSize);
   }
 
   componentDidMount() {
-    let showListener = 'keyboardWillShow';
-    let hideListener = 'keyboardWillHide';
+    var showListener = 'keyboardWillShow';
+    var hideListener = 'keyboardWillHide';
 
     if (Platform.OS === 'android') {
       showListener = 'keyboardDidShow';
@@ -31,58 +30,41 @@ class Logo extends Component {
     this.keyboardHideListener.remove();
   }
 
-    keyboardShow = () => {
-      Animated.parallel([
-        Animated.timing(this.containerImageSize, {
-          toValue: styles.$smallContainerSize,
-          duration: ANIMATION_DURATION,
-        }),
+  keyboardShow = () => {
+    Animated.parallel([
+      Animated.timing(this.containerImageSize, {
+        toValue: styles.$smallContainerSize,
+        duration: ANIMATION_DURATION,
+      }),
+    ]).start();
+  };
 
-        Animated.timing(this.imageSize, {
-          toValue: styles.$smallImageSize,
-          duration: ANIMATION_DURATION,
-        }),
+  keyboardHide = () => {
+    Animated.parallel([
+      Animated.timing(this.containerImageSize, {
+        toValue: styles.$largeContainerSize,
+        duration: ANIMATION_DURATION,
+      }),
+    ]).start();
+  };
 
-      ]).start();
-    };
+  render() {
+    const containerImageStyle = [
+      styles.containerImage,
+      { width: this.containerImageSize, height: this.containerImageSize },
+    ];
 
-    keyboardHide = () => {
-      Animated.parallel([
-        Animated.timing(this.containerImageSize, {
-          toValue: styles.$largeContainerSize,
-          duration: this.ANIMATION_DURATION,
-        }),
-
-        Animated.timing(this.imageSize, {
-          toValue: styles.$largeImageSize,
-          duration: this.ANIMATION_DURATION,
-        }),
-
-      ]).start();
-    };
-
-    render() {
-      const containerImageStyle = [
-        styles.containerImage,
-        { width: this.containerImageSize, height: this.containerImageSize },
-      ];
-
-      const imageStyle = [
-        styles.logo,
-        { width: this.imageSize },
-      ];
-
-      return (
-        <View style={containerImageStyle}>
-          <Animated.Image
-            resizeMode="contain"
-            style={imageStyle}
-            source={require('./images/logo.png')}
-          />
-          <Text style={styles.text}>Currency Converter</Text>
-        </View>
-      );
-    }
+    return (
+      <View style={styles.container}>
+        <Animated.Image
+          resizeMode="contain"
+          style={containerImageStyle}
+          source={require('./images/logo.png')}
+        />
+        <Text style={styles.text}>Currency Converter</Text>
+      </View>
+    );
+  }
 }
 
 export default Logo;
