@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import Separator from '../components/List/Separator';
 import ListItem from '../components/List/ListItem';
+import { connectAlert } from '../components/Alert';
 
 const ICON_PREFIX = Platform.OS === 'ios' ? 'ios' : 'md';
 const ICON_COLOR = '#868686';
@@ -13,6 +14,7 @@ const ICON_SIZE = 23;
 class Options extends Component {
     static propTypes = {
       navigation: PropTypes.object,
+      alertWithType: PropTypes.func,
     };
 
     handleThemesPress = () => {
@@ -20,7 +22,8 @@ class Options extends Component {
     };
 
     handleSitePress = () => {
-      Linking.openURL('https://github.com/vladkanash').catch(() => alert('An error occurred'));
+      Linking.openURL('https://github.com/vladkanash').catch(() =>
+        this.props.alertWithType('error', 'Sorry!', 'github.com can\'t be open right now'));
     };
 
     render() {
@@ -45,4 +48,4 @@ class Options extends Component {
     }
 }
 
-export default Options;
+export default connectAlert(Options);

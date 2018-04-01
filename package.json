@@ -35,6 +35,8 @@
     "react-native-extended-stylesheet": "latest",
     "moment": "latest",
     "@expo/vector-icons": "latest",
-    "react-navigation": "latest"
+    "react-navigation": "latest",
+    "react-native-dropdownalert": "latest",
+    "hoist-non-react-statics": "latest"
   }
 }
