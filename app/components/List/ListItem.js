@@ -20,11 +20,12 @@ const ListItem = ({
   >
     <View style={styles.row}>
       <Text style={styles.text}>{text}</Text>
-      {selected ? <Icon
-        checkmark={checkmark}
-        visible={visible}
-        iconBackground={iconBackground}
-      /> : <Icon />}
+      {selected ?
+        <Icon
+          checkmark={checkmark}
+          visible={visible}
+          iconBackground={iconBackground}
+        /> : <Icon />}
       {customIcon}
     </View>
   </TouchableHighlight>

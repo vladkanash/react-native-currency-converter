@@ -13,6 +13,7 @@ class CurrencyList extends Component {
       dispatch: PropTypes.func,
       baseCurrency: PropTypes.string,
       quoteCurrency: PropTypes.string,
+      primaryColor: PropTypes.string,
     };
 
     handlePress = (currency) => {
@@ -39,11 +40,14 @@ class CurrencyList extends Component {
             data={currencies}
             keyExtractor={item => item}
             ItemSeparatorComponent={Separator}
-            renderItem={({ item }) => (<ListItem
-              text={item}
-              selected={item === comparisonCurrency}
-              onPress={() => this.handlePress(item)}
-            />)}
+            renderItem={({ item }) => (
+              <ListItem
+                text={item}
+                selected={item === comparisonCurrency}
+                onPress={() => this.handlePress(item)}
+                iconBackground={this.props.primaryColor}
+              />
+            )}
           />
         </View>
       );
@@ -52,9 +56,11 @@ class CurrencyList extends Component {
 
 const mapStateToProps = (state) => {
   const { baseCurrency, quoteCurrency } = state.currencies;
+  const { primaryColor } = state.theme;
   return {
     baseCurrency,
     quoteCurrency,
+    primaryColor,
   };
 };
 
