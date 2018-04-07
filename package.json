@@ -37,6 +37,9 @@
     "@expo/vector-icons": "latest",
     "react-navigation": "latest",
     "react-native-dropdownalert": "latest",
-    "hoist-non-react-statics": "latest"
+    "hoist-non-react-statics": "latest",
+    "redux": "latest",
+    "react-redux": "latest",
+    "redux-logger": "latest"
   }
 }
