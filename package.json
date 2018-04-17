@@ -27,19 +27,20 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo/vector-icons": "latest",
     "color": "^3.0.0",
     "expo": "^25.0.0",
+    "hoist-non-react-statics": "latest",
+    "moment": "latest",
     "prop-types": "latest",
     "react": "16.2.0",
     "react-native": "0.52.0",
-    "react-native-extended-stylesheet": "latest",
-    "moment": "latest",
-    "@expo/vector-icons": "latest",
-    "react-navigation": "latest",
     "react-native-dropdownalert": "latest",
-    "hoist-non-react-statics": "latest",
-    "redux": "latest",
+    "react-native-extended-stylesheet": "latest",
+    "react-navigation": "latest",
     "react-redux": "latest",
-    "redux-logger": "latest"
+    "redux": "latest",
+    "redux-logger": "latest",
+    "redux-saga": "^0.16.0"
   }
 }
