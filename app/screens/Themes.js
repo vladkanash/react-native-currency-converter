@@ -39,7 +39,7 @@ class Themes extends Component {
           <Separator />
           <ListItem
             text="Orange"
-            onPress={() => this.handleThemePress(styles.$green)}
+            onPress={() => this.handleThemePress(styles.$orange)}
             selected
             checkmark={false}
             iconBackground={styles.$orange}
@@ -47,7 +47,7 @@ class Themes extends Component {
           <Separator />
           <ListItem
             text="Green"
-            onPress={() => this.handleThemePress(styles.$orange)}
+            onPress={() => this.handleThemePress(styles.$green)}
             selected
             checkmark={false}
             iconBackground={styles.$green}
