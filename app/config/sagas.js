@@ -12,7 +12,7 @@ import {
   CONVERSION_ERROR,
 } from '../actions/currencies';
 
-const getLatestRate = currency => fetch(`http://api.fixer.io/latest?base=${currency}`);
+const getLatestRate = () => fetch(`http://www.nbrb.by/API/ExRates/Rates?Periodicity=0`);
 
 function* fetchLatestConversionRates(action) {
   try {

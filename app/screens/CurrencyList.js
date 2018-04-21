@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { ListItem, Separator } from '../components/List';
-import currencies from '../data/currencies';
 import { changeBaseCurrency, changeQuoteCurrency } from '../actions/currencies';
 
 class CurrencyList extends Component {
@@ -14,14 +13,15 @@ class CurrencyList extends Component {
       baseCurrency: PropTypes.string,
       quoteCurrency: PropTypes.string,
       primaryColor: PropTypes.string,
+      currencyList: PropTypes.array,
     };
 
     handlePress = (currency) => {
       const { type } = this.props.navigation.state.params;
       if (type === 'base') {
-        this.props.dispatch(changeBaseCurrency(currency));
+        this.props.dispatch(changeBaseCurrency(currency.abbr));
       } else if (type === 'quote') {
-        this.props.dispatch(changeQuoteCurrency(currency));
+        this.props.dispatch(changeQuoteCurrency(currency.abbr));
       }
 
       this.props.navigation.goBack(null);
@@ -37,13 +37,13 @@ class CurrencyList extends Component {
         <View style={{ flex: 1 }}>
           <StatusBar barStyle="default" translucent={false} />
           <FlatList
-            data={currencies}
-            keyExtractor={item => item}
+            data={this.props.currencyList}
+            keyExtractor={item => item.abbr}
             ItemSeparatorComponent={Separator}
             renderItem={({ item }) => (
               <ListItem
-                text={item}
-                selected={item === comparisonCurrency}
+                text={item.abbr + ' - ' + item.name}
+                selected={item.abbr === comparisonCurrency}
                 onPress={() => this.handlePress(item)}
                 iconBackground={this.props.primaryColor}
               />
@@ -55,12 +55,20 @@ class CurrencyList extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const currencyList = Object.values(state.currencies.conversions)
+    .map(e => ({
+      abbr: e.Cur_Abbreviation,
+      name: e.Cur_Name
+    }));
+
+  console.log(currencyList);
   const { baseCurrency, quoteCurrency } = state.currencies;
   const { primaryColor } = state.theme;
   return {
     baseCurrency,
     quoteCurrency,
     primaryColor,
+    currencyList,
   };
 };
 

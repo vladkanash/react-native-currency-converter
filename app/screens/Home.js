@@ -64,7 +64,10 @@ class Home extends Component {
     };
 
     render() {
-      let quotePrice = (this.props.amount * this.props.conversionRate).toFixed(2);
+      let quotePrice = this.props.swapped ?
+        (this.props.amount / this.props.conversionRate).toFixed(2) :
+        (this.props.amount * this.props.conversionRate).toFixed(2);
+
       if (this.props.isFetching) {
         quotePrice = '...';
       }
@@ -112,20 +115,22 @@ class Home extends Component {
 
 const mapStateToProps = (state) => {
   const {
-    baseCurrency, quoteCurrency, amount, error,
+    baseCurrency, quoteCurrency, amount, error, isFetching, swapped
   } = state.currencies;
+
   const { primaryColor } = state.theme;
-  const conversionSelector = state.currencies.conversions[baseCurrency] || {};
-  const rates = conversionSelector.rates || {};
+  const currencyKey = swapped ? baseCurrency : quoteCurrency;
+  const conversionInfo = state.currencies.conversions[currencyKey] || {};
 
   return {
     baseCurrency,
     quoteCurrency,
     amount,
     primaryColor,
-    conversionRate: rates[quoteCurrency] || 0,
-    isFetching: conversionSelector.isFetching,
-    lastConvertedDate: conversionSelector.date ? new Date(conversionSelector.date) : new Date(),
+    isFetching,
+    swapped,
+    conversionRate: conversionInfo.Cur_OfficialRate || 0,
+    lastConvertedDate: conversionInfo.Date ? new Date(conversionInfo.Date) : new Date(),
     currencyError: error,
   };
 };

@@ -8,30 +8,26 @@ import {
   CONVERSION_ERROR,
 } from '../actions/currencies';
 
+const DEFAULT_CURRENCY = 'BYN';
+
 const initialState = {
-  baseCurrency: 'USD',
-  quoteCurrency: 'GBP',
+  baseCurrency: DEFAULT_CURRENCY,
+  quoteCurrency: 'USD',
   amount: 100,
   conversions: {},
   error: null,
+  swapped: false,
 };
 
-const setConversions = (state, action) => {
-  let conversion = {
-    isFetching: true,
-    date: '',
-    rates: {},
-  };
-
-  if (state.conversions[action.currency]) {
-    conversion = state.conversions[action.currency];
-  }
-
-  return {
-    ...state.conversions,
-    [action.currency]: conversion,
-  };
+const mapConversions = (jsonResult) => {
+  let result = {};
+  jsonResult.forEach(e => {
+    result[e.Cur_Abbreviation] = e;
+  });
+  return result;
 };
+
+
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -46,39 +42,39 @@ const reducer = (state = initialState, action) => {
         ...state,
         baseCurrency: state.quoteCurrency,
         quoteCurrency: state.baseCurrency,
+        swapped: !state.swapped,
       };
 
     case CHANGE_BASE_CURRENCY:
       return {
         ...state,
+        isFetching: true,
+        swapped: true,
         baseCurrency: action.currency,
-        conversions: setConversions(state, action),
+        quoteCurrency: DEFAULT_CURRENCY,
       };
 
-    case CHANGE_QUOTE_CURRENCY:
+    case CHANGE_QUOTE_CURRENCY: //TODO do not use this action
       return {
         ...state,
+        baseCurrency: DEFAULT_CURRENCY,
         quoteCurrency: action.currency,
-        conversions: setConversions(state, action),
+        isFetching: true,
+        swapped: false,
       };
 
     case GET_INITIAL_CONVERSION:
       return {
         ...state,
-        conversions: setConversions(state, { currency: state.baseCurrency }),
+        baseCurrency: DEFAULT_CURRENCY,
+        isFetching: true,
       };
 
     case CONVERSION_RESULT:
       return {
         ...state,
-        baseCurrency: action.result.base,
-        conversions: {
-          ...state.conversions,
-          [action.result.base]: {
-            isFetching: false,
-            ...action.result,
-          },
-        },
+        conversions: mapConversions(action.result),
+        isFetching: false,
       };
 
     case CONVERSION_ERROR:
