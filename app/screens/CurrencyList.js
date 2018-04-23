@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 
 import { ListItem, Separator } from '../components/List';
 import { changeBaseCurrency, changeQuoteCurrency } from '../actions/currencies';
+import {getCurrencyDynamics} from "../actions/dynamics";
+import moment from "moment/moment";
 
 class CurrencyList extends Component {
     static propTypes = {
@@ -14,6 +16,7 @@ class CurrencyList extends Component {
       quoteCurrency: PropTypes.string,
       primaryColor: PropTypes.string,
       currencyList: PropTypes.array,
+      startDate: PropTypes.object,
     };
 
     handlePress = (currency) => {
@@ -23,7 +26,7 @@ class CurrencyList extends Component {
       } else if (type === 'quote') {
         this.props.dispatch(changeQuoteCurrency(currency.abbr));
       }
-
+      this.props.dispatch(getCurrencyDynamics(currency.code, this.props.startDate, new Date()));
       this.props.navigation.goBack(null);
     };
 
@@ -58,13 +61,15 @@ const mapStateToProps = (state) => {
   const currencyList = Object.values(state.currencies.conversions)
     .map(e => ({
       abbr: e.Cur_Abbreviation,
-      name: e.Cur_Name
+      name: e.Cur_Name,
+      code: e.Cur_ID,
     }));
 
-  console.log(currencyList);
+  const startDate = moment().subtract(1, 'months');
   const { baseCurrency, quoteCurrency } = state.currencies;
   const { primaryColor } = state.theme;
   return {
+    startDate,
     baseCurrency,
     quoteCurrency,
     primaryColor,

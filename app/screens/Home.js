@@ -11,6 +11,8 @@ import { LastConverted } from '../components/Text';
 import { Header } from '../components/Header';
 import { swapCurrency, changeCurrencyAmount, getInitialConversion } from '../actions/currencies';
 import { connectAlert } from '../components/Alert';
+import {getCurrencyDynamics} from "../actions/dynamics";
+import moment from 'moment';
 
 class Home extends Component {
     static propTypes = {
@@ -25,10 +27,12 @@ class Home extends Component {
       primaryColor: PropTypes.string,
       alertWithType: PropTypes.func,
       currencyError: PropTypes.string,
+      startDate: PropTypes.object,
     };
 
     componentWillMount() {
       this.props.dispatch(getInitialConversion());
+      this.props.dispatch(getCurrencyDynamics('145', this.props.startDate, new Date()));
     }
 
     componentWillReceiveProps(nextProps) {
@@ -63,6 +67,10 @@ class Home extends Component {
       this.props.navigation.navigate('Options');
     };
 
+    handleShowDynamics = () => {
+      this.props.navigation.navigate('Dynamics');
+    };
+
     render() {
       let quotePrice = this.props.swapped ?
         (this.props.amount / this.props.conversionRate).toFixed(2) :
@@ -87,6 +95,7 @@ class Home extends Component {
               keyboardType="numeric"
               onChangeText={this.handleTextChange}
               textColor={this.props.primaryColor}
+              onPressRight={this.props.baseCurrency !== 'BYN' ? this.handleShowDynamics : null}
             />
             <InputWithButton
               editable={false}
@@ -96,6 +105,7 @@ class Home extends Component {
               keyboardType="numeric"
               onChangeText={this.handleTextChange}
               textColor={this.props.primaryColor}
+              onPressRight={this.props.quoteCurrency !== 'BYN' ? this.handleShowDynamics : null}
             />
             <LastConverted
               base={this.props.baseCurrency}
@@ -118,11 +128,13 @@ const mapStateToProps = (state) => {
     baseCurrency, quoteCurrency, amount, error, isFetching, swapped
   } = state.currencies;
 
+  const startDate = moment().subtract(1, 'months');
   const { primaryColor } = state.theme;
   const currencyKey = swapped ? baseCurrency : quoteCurrency;
   const conversionInfo = state.currencies.conversions[currencyKey] || {};
 
   return {
+    startDate,
     baseCurrency,
     quoteCurrency,
     amount,

@@ -81,6 +81,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         error: action.error,
+        isFetching: false,
       };
 
     default:

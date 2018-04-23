@@ -4,6 +4,7 @@ import Home from '../screens/Home';
 import CurrencyList from '../screens/CurrencyList';
 import Options from '../screens/Options';
 import Themes from '../screens/Themes';
+import Dynamics from '../screens/Dynamics';
 
 const HomeStack = StackNavigator({
   Home: {
@@ -24,6 +25,12 @@ const HomeStack = StackNavigator({
       headerTitle: 'Themes',
     },
   },
+  Dynamics: {
+    screen: Dynamics,
+    navigationOptions: {
+      headerTitle: 'Rate changes',
+    }
+  }
 }, {
   headerMode: 'screen',
 });

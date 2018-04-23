@@ -37,6 +37,7 @@
     "react-native": "0.52.0",
     "react-native-dropdownalert": "latest",
     "react-native-extended-stylesheet": "latest",
+    "react-native-svg-charts": "^5.0.0",
     "react-navigation": "latest",
     "react-redux": "latest",
     "redux": "latest",

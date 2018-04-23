@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, TouchableHighlight, TextInput } from 'react-native';
+import {Platform, Text, TextInput, TouchableHighlight, View} from 'react-native';
 import color from 'color';
 
 import styles from './styles';
+import {Ionicons} from "@expo/vector-icons";
+
+const ICON_PREFIX = Platform.OS === 'ios' ? 'ios' : 'md';
+const ICON_SIZE = 30;
 
 const InputWithButton = (props) => {
   const { onPress, buttonText, editable = true } = props;
@@ -42,12 +46,30 @@ const InputWithButton = (props) => {
         underlineColorAndroid="transparent"
         {...props}
       />
+
+      { props.onPressRight ?
+        <TouchableHighlight
+          underlayColor={underlayColor}
+          style={styles.buttonContainer}
+          onPress={props.onPressRight}
+        >
+          <View style={styles.icon}>
+            <Ionicons
+              name={`${ICON_PREFIX}-analytics`}
+              color={props.textColor}
+              size={ICON_SIZE}/>
+          </View>
+        </TouchableHighlight>
+        : null
+      }
+
     </View>
   );
 };
 
 InputWithButton.propTypes = {
   onPress: PropTypes.func,
+  onPressRight: PropTypes.func,
   buttonText: PropTypes.string,
   editable: PropTypes.bool,
   textColor: PropTypes.string,

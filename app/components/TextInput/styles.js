@@ -29,6 +29,7 @@ export default EStyleSheet.create({
     backgroundColor: '$white',
     borderTopLeftRadius: BORDER_RADIUS,
     borderBottomLeftRadius: BORDER_RADIUS,
+    borderRadius: BORDER_RADIUS,
   },
   buttonText: {
     fontWeight: '600',
@@ -47,5 +48,8 @@ export default EStyleSheet.create({
     height: INPUT_HEIGHT,
     width: StyleSheet.hairlineWidth,
     backgroundColor: '$border',
+  },
+  icon: {
+    marginHorizontal: 11,
   },
 });
