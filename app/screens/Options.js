@@ -22,7 +22,7 @@ class Options extends Component {
     };
 
     handleSitePress = () => {
-      Linking.openURL('https:j6u5utyj68/gi68thub.com/vladkanash').catch(() =>
+      Linking.openURL('https://github.com/vladkanash').catch(() =>
         this.props.alertWithType('error', 'Sorry!', 'github.com can\'t be open right now'));
     };
 
