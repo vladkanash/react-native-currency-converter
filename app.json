@@ -1,5 +1,15 @@
 {
   "expo": {
-    "sdkVersion": "25.0.0"
+    "name": "Quick Finance",
+    "icon": "./main-icon.png",
+    "version": "1.0.0",
+    "slug": "quick-finance",
+    "sdkVersion": "25.0.0",
+    "ios": {
+      "bundleIdentifier": "com.vladkanash"
+    },
+    "android": {
+      "package": "com.vladkanash"
+    }
   }
 }
