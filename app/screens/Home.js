@@ -71,10 +71,12 @@ class Home extends Component {
       this.props.navigation.navigate('Dynamics');
     };
 
+    getProperRate = () =>
+      this.props.swapped ?
+        this.props.conversionRate : (1 / this.props.conversionRate).toFixed(4);
+
     render() {
-      let quotePrice = this.props.swapped ?
-        (this.props.amount / this.props.conversionRate).toFixed(2) :
-        (this.props.amount * this.props.conversionRate).toFixed(2);
+      let quotePrice = (this.props.amount * this.getProperRate()).toFixed(2);
 
       if (this.props.isFetching) {
         quotePrice = '...';
@@ -111,7 +113,7 @@ class Home extends Component {
               base={this.props.baseCurrency}
               quote={this.props.quoteCurrency}
               date={this.props.lastConvertedDate}
-              conversionRate={this.props.conversionRate}
+              conversionRate={this.getProperRate()}
             />
             <ClearButton
               text="Reverse Currencies"
