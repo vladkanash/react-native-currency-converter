@@ -22,6 +22,7 @@ class Home extends Component {
       quoteCurrency: PropTypes.string,
       amount: PropTypes.number,
       conversionRate: PropTypes.number,
+      conversionScale: PropTypes.number,
       isFetching: PropTypes.bool,
       lastConvertedDate: PropTypes.object,
       primaryColor: PropTypes.string,
@@ -76,7 +77,9 @@ class Home extends Component {
         this.props.conversionRate : (1 / this.props.conversionRate).toFixed(4);
 
     render() {
-      let quotePrice = (this.props.amount * this.getProperRate()).toFixed(2);
+      let quotePrice = (this.props.amount *
+        this.getProperRate() *
+        (this.props.swapped ? 1 / this.props.conversionScale : this.props.conversionScale)).toFixed(2);
 
       if (this.props.isFetching) {
         quotePrice = '...';
@@ -114,6 +117,8 @@ class Home extends Component {
               quote={this.props.quoteCurrency}
               date={this.props.lastConvertedDate}
               conversionRate={this.getProperRate()}
+              baseScale={this.props.swapped ? this.props.conversionScale : 1}
+              quoteScale={this.props.swapped ? 1 : this.props.conversionScale}
             />
             <ClearButton
               text="Reverse Currencies"
@@ -144,6 +149,7 @@ const mapStateToProps = (state) => {
     isFetching,
     swapped,
     conversionRate: conversionInfo.Cur_OfficialRate || 0,
+    conversionScale: conversionInfo.Cur_Scale || 1,
     lastConvertedDate: conversionInfo.Date ? new Date(conversionInfo.Date) : new Date(),
     currencyError: error,
   };
